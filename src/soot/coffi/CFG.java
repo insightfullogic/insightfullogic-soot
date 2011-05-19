@@ -873,6 +873,7 @@ public class CFG {
             LocalVariableTypeTable_attribute lt = ca.findLocalVariableTypeTable();
 
             Util.v().activeVariableTable = la;
+            Util.v().localToNameAndIndex = new HashMap<Local, NameAndIndex>();
             Util.v().activeVariableTypeTable = lt;
             
             Util.v().activeConstantPool = constant_pool;

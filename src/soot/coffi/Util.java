@@ -50,6 +50,7 @@ public class Util
     int activeOriginalIndex = -1;
     cp_info[] activeConstantPool = null;
     LocalVariableTable_attribute activeVariableTable;
+    Map<Local, NameAndIndex> localToNameAndIndex;
     LocalVariableTypeTable_attribute activeVariableTypeTable;
     boolean useFaithfulNaming = false;
     boolean isLocalStore = false;  // global variable used 
@@ -812,46 +813,75 @@ swtch:
     Local getLocalForIndex(JimpleBody listBody, int index)
     {
         String name = null;
-        String debug_type = null;
         boolean assignedName = false;
-        if(useFaithfulNaming && activeVariableTable != null)
-        {
-            if(activeOriginalIndex != -1)
-            {
+		if (useFaithfulNaming && activeVariableTable != null) 
+		{
+			if (activeOriginalIndex != -1) 
+			{
 
-	      // Feng asks: why this is necessary? it does wrong thing
-	      //            for searching local variable names.
-	      // It is going to be verified with plam.
-                if(isLocalStore)
-                    activeOriginalIndex++;
-                if(isWideLocalStore)
-                    activeOriginalIndex++;
+				// Feng asks: why this is necessary? it does wrong thing
+				// for searching local variable names.
+				// It is going to be verified with plam.
+				if (isLocalStore)
+					activeOriginalIndex++;
+				if (isWideLocalStore)
+					activeOriginalIndex++;
 
-                name = activeVariableTable.getLocalVariableName(activeConstantPool, index, activeOriginalIndex);
-                if (activeVariableTypeTable != null){
-               debug_type = activeVariableTypeTable.getLocalVariableType(activeConstantPool, index, activeOriginalIndex);
-               if (debug_type != null){
-               }
-                }
-                if(name != null) 
-                    assignedName = true;
-            }
-        }  
+				name = activeVariableTable.getLocalVariableName(activeConstantPool, index, activeOriginalIndex);
+
+				if (name != null)
+					assignedName = true;
+			}
+		}
         
         if(!assignedName)
             name = "l" + index;
 
-        if(declaresLocal(listBody, name))
-            return getLocal(listBody, name);
+        if(declaresLocal(listBody, name)){
+        	//A Local with this name already exists, determine if they have the same name and index
+        	
+        	//initialise to the current name and index
+        	String generatedName = name;
+        	NameAndIndex nameIndex = new NameAndIndex(index, generatedName);
+        	
+        	//get the existing local and its NameAndIndex
+        	Local l = getLocal(listBody, generatedName);
+        	NameAndIndex ni = localToNameAndIndex.get(l);
+        	
+        	int count = 1;
+        	
+        	//Generate names until either:
+        	//There is no existing local with this name (i.e. either l or ni are null)
+        	//The existing Local is found (i.e one with the same index)
+        	while(l!=null && ni != null && ni.index!=nameIndex.index) {
+        		generatedName = name +"#"+count;
+        		count++;
+        		l=null;
+        		ni=null;
+        		
+        		if(declaresLocal(listBody,generatedName)) {
+        			l = getLocal(listBody, generatedName);
+                	ni = localToNameAndIndex.get(l);
+        		}
+        	}
+        	
+        	if(l==null){
+        		//no existing Local was found generate a new one and store it
+	            Local newL = Jimple.v().newLocal(generatedName, UnknownType.v());
+
+	            listBody.getLocals().add(newL);
+	            localToNameAndIndex.put(newL, new NameAndIndex( index, generatedName));
+	            return newL;
+        	}
+        	
+        	return l;        	
+        }
         else {
             Local l = Jimple.v().newLocal(name,
                 UnknownType.v());
 
             listBody.getLocals().add(l);
-            /*if (debug_type != null){
-                l.addTag(new DebugTypeTag(debug_type));
-            } */   
-
+    		localToNameAndIndex.put(l, new NameAndIndex( index, name)) ;
             return l;
         }
     }
