@@ -69,8 +69,8 @@ class LocalVariableTable_attribute extends attribute_info {
          e = local_variable_table[i];
          if (e.index==idx &&
              (code==-1 ||
-	      (code>=e.start_pc && code<=e.start_pc+e.length))){
-	      //  (code>=e.start_pc && code<e.start_pc+e.length))) {
+	          //(code>=e.start_pc && code<=e.start_pc+e.length))){
+	        (code>=e.start_pc && code<e.start_pc+e.length))) {
             // found the variable, now find its name.
             
             //G.v().out.println("found entry: " + i);
