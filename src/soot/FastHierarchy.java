@@ -445,6 +445,7 @@ public class FastHierarchy
             Collection c = classToSubclasses.get( concreteType );
             if( c != null ) worklist.addAll( c );
             if( !concreteType.isAbstract() ) {
+            	boolean hasNonVisibleConcreteMethod=false;
                 while( true ) {
                     if( resolved.contains( concreteType ) ) break;
                     resolved.add( concreteType );
@@ -457,9 +458,23 @@ public class FastHierarchy
                             ret.add( concreteType.getMethod( methodSig ) );
                             break;
                         }
+                        else {
+                        	//there is a concrete method but it is non-visible, this probably due to being an inner class
+                        	hasNonVisibleConcreteMethod = true;
+                        }
                     }
-                    if( !concreteType.hasSuperclass() ) 
-                        throw new RuntimeException("could not resolve abstract dispatch!\nAbstract Type: "+abstractType+"\nConcrete Type: "+savedConcreteType+"\nMethod: "+m);
+
+                    if( !concreteType.hasSuperclass() )  {
+                    	if(hasNonVisibleConcreteMethod) {
+                    		//there was a method it was just not visible to us, ignore this class
+                    		break;
+                    	}
+                    	else {
+                    		//could not find an implementation
+                    		throw new RuntimeException("could not resolve abstract dispatch!\nAbstract Type: "+abstractType+"\nConcrete Type: "+savedConcreteType+"\nMethod: "+m);
+                    	}
+                    }
+
                     concreteType = concreteType.getSuperclass();
                 }
             }
