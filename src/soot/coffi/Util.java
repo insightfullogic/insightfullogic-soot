@@ -126,6 +126,7 @@ public class Util
     
                     references.add(interfaceName);
                     SootClass interfaceClass = SootResolver.v().makeClassRef(interfaceName);
+                    interfaceClass.setModifiers(interfaceClass.getModifiers() | Modifier.INTERFACE);
                     bclass.addInterface(interfaceClass);
                 }
         }
