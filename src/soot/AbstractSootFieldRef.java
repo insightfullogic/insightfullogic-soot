@@ -28,7 +28,7 @@ import soot.jimple.toolkits.typing.TypeAssigner;
  * procedure in the Java Virtual Machine Specification, 2nd ed, section 5.4.3.2.
  */
 
-class AbstractSootFieldRef implements SootFieldRef {
+public class AbstractSootFieldRef implements SootFieldRef {
     public AbstractSootFieldRef( 
             SootClass declaringClass,
             String name,

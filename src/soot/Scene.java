@@ -89,6 +89,11 @@ public class Scene  //extends AbstractHost
     }
 	private void determineExcludedPackages() {
 		excludedPackages = new LinkedList<String>();
+		includedPackages = new LinkedList<String>();
+		
+		if(Options.v().include() != null) {
+			includedPackages.addAll(Options.v().include());
+		}
         if (Options.v().exclude() != null)
             excludedPackages.addAll(Options.v().exclude());
 
@@ -1134,7 +1139,7 @@ public class Scene  //extends AbstractHost
                             s.setLibraryClass();
                     }
                 }
-                for( Iterator<String> pkgIt = Options.v().include().iterator(); pkgIt.hasNext(); ) {
+                for( Iterator<String> pkgIt = includedPackages.iterator(); pkgIt.hasNext(); ) {
                     final String pkg = (String) pkgIt.next();
                     if ((s.getPackageName()+".").startsWith(pkg))
                         s.setApplicationClass();
@@ -1149,6 +1154,11 @@ public class Scene  //extends AbstractHost
 
     public boolean isExcluded(SootClass sc) {
     	String name = sc.getName();
+    	for(String pkg: includedPackages){
+			if(name.startsWith(pkg)) {
+    			return false;
+    		}
+    	}
     	for(String pkg: excludedPackages){
 			if(name.startsWith(pkg)) {
     			return true;
@@ -1209,6 +1219,7 @@ public class Scene  //extends AbstractHost
     private boolean doneResolving = false;
 	private boolean incrementalBuild;
 	protected LinkedList<String> excludedPackages;
+	protected LinkedList<String> includedPackages;
     public boolean doneResolving() { return doneResolving; }
     public void setDoneResolving() { doneResolving = true; }
     public void setMainClassFromOptions() {
