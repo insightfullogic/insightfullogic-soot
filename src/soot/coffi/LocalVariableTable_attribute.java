@@ -31,6 +31,8 @@
 
 package soot.coffi;
 
+import soot.G;
+
 /** A debugging attribute, this gives the names of local variables
  * within blocks of bytecode.
  * @see attribute_info
@@ -63,23 +65,36 @@ class LocalVariableTable_attribute extends attribute_info {
       local_variable_table_entry e;
       int i;
 
+      local_variable_table_entry ewarn = null;
+      
+      
       // G.v().out.println("searching for name of local: " + idx + "at: " + code);
       // now to find that variable
       for (i=0;i<local_variable_table_length;i++) {
          e = local_variable_table[i];
+
+    	 if(e.index==idx && code==e.start_pc+e.length && e.length>0) {
+    		 ewarn = e;
+    	 }
+    	 
          if (e.index==idx &&
              (code==-1 ||
-	          //(code>=e.start_pc && code<=e.start_pc+e.length))){
-	        (code>=e.start_pc && code<e.start_pc+e.length))) {
+	         (code>=e.start_pc && code<=e.start_pc+e.length))){
+	        //(code>=e.start_pc && code<e.start_pc+e.length))) {
             // found the variable, now find its name.
-            
+             
             //G.v().out.println("found entry: " + i);
 
             if (constant_pool[e.name_index] instanceof CONSTANT_Utf8_info)
 	    {
 	       String n = ((CONSTANT_Utf8_info)(constant_pool[e.name_index])).convert();
-	       if (Util.v().isValidJimpleName(n))
-		   return n;
+	       if (Util.v().isValidJimpleName(n)) {
+	    	   if(ewarn != null) {
+	    		   G.v().out.println("Warning - The code line being checked lies on the edge of a variables scope, this may result in compiler specific behaviour, and possibly variables given the wrong type");
+	    		   G.v().out.println("Warning - The variables name was resolved to: "+n+" "+ewarn);
+	    	   }
+	    	   return n;
+	       }
 	       else
 		   return null;
 	    }
@@ -89,6 +104,12 @@ class LocalVariableTable_attribute extends attribute_info {
             }
          }
       }
+      if(ewarn != null) {
+    	  G.v().out.println("Warning - The code line being checked lies on the edge of a variables scope, this may result in compiler specific behaviour, and possibly variables given the wrong type");
+    	  G.v().out.println("Warning - The variable name was not resolved but the possible match was: "+ewarn);
+      }
+      
+      
       return null;
    }
    

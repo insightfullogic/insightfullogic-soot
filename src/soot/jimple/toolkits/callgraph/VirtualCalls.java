@@ -38,19 +38,24 @@ public final class VirtualCalls
     public SootMethod resolveSpecial( SpecialInvokeExpr iie, NumberedString subSig, SootMethod container ) {
         SootMethod target = iie.getMethod();
         /* cf. JVM spec, invokespecial instruction */
-        if( Scene.v().getOrMakeFastHierarchy()
-                .canStoreType( container.getDeclaringClass().getType(),
-                    target.getDeclaringClass().getType() )
-            && container.getDeclaringClass().getType() !=
-                target.getDeclaringClass().getType() 
-            && !target.getName().equals( "<init>" ) 
-            && subSig != sigClinit ) {
-
-            return resolveNonSpecial(
-                    container.getDeclaringClass().getSuperclass().getType(),
-                    subSig );
-        } else {
-            return target;
+        try {
+	        if( Scene.v().getOrMakeFastHierarchy()
+	                .canStoreType( container.getDeclaringClass().getType(),
+	                    target.getDeclaringClass().getType() )
+	            && container.getDeclaringClass().getType() !=
+	                target.getDeclaringClass().getType() 
+	            && !target.getName().equals( "<init>" ) 
+	            && subSig != sigClinit ) {
+	
+	            return resolveNonSpecial(
+	                    container.getDeclaringClass().getSuperclass().getType(),
+	                    subSig );
+	        } else {
+	            return target;
+	        }
+        }
+        catch (UnhandledTypeException e) {
+        	throw new RuntimeException("Error while resolving type for method: "+container.getSignature(), e);
         }
     }
 
@@ -86,14 +91,19 @@ public final class VirtualCalls
         if( declaredType instanceof ArrayType ) declaredType = RefType.v("java.lang.Object");
         if( sigType instanceof ArrayType ) sigType = RefType.v("java.lang.Object");
         if( t instanceof ArrayType ) t = RefType.v( "java.lang.Object" );
-        if( declaredType != null && !Scene.v().getOrMakeFastHierarchy()
-                .canStoreType( t, declaredType ) ) {
-            return;
+        try {
+	        if( declaredType != null && !Scene.v().getOrMakeFastHierarchy()
+	                .canStoreType( t, declaredType ) ) {
+	            return;
+	        }
+	        if( sigType != null && !Scene.v().getOrMakeFastHierarchy()
+	                .canStoreType( t, sigType ) ) {
+	            return;
+	        }
+        } catch (UnhandledTypeException e) {
+        	throw new RuntimeException("Error while resolving type for method: "+container.getSignature(), e);
         }
-        if( sigType != null && !Scene.v().getOrMakeFastHierarchy()
-                .canStoreType( t, sigType ) ) {
-            return;
-        }
+
         if( t instanceof RefType ) {
             SootMethod target = resolveNonSpecial( (RefType) t, subSig );
             if( target != null ) targets.add( target );

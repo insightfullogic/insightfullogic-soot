@@ -20,6 +20,7 @@
 package soot;
 
 import soot.jimple.*;
+import soot.jimple.toolkits.callgraph.UnhandledTypeException;
 import soot.util.*;
 import java.util.*;
 
@@ -219,7 +220,7 @@ public class FastHierarchy
             }
         } else if( child instanceof AnySubType ) {
             if( !(parent instanceof RefLikeType ) ) {
-                throw new RuntimeException( "Unhandled type "+parent );
+                throw new UnhandledTypeException( "Unhandled type "+parent );
             } else if(parent instanceof ArrayType) {
                 Type base = ((AnySubType)child).getBase();
                 // From Java Language Spec 2nd ed., Chapter 10, Arrays
