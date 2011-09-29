@@ -71,8 +71,8 @@ class LocalVariableTypeTable_attribute extends attribute_info {
          e = local_variable_type_table[i];
          if (e.index==idx &&
              (code==-1 ||
-	      (code>=e.start_pc && code<=e.start_pc+e.length))){
-	      //  (code>=e.start_pc && code<e.start_pc+e.length))) {
+	      //(code>=e.start_pc && code<=e.start_pc+e.length))){
+	        (code>=e.start_pc && code<e.start_pc+e.length))) {
             // found the variable, now find its name.
             
             //G.v().out.println("found entry: " + i);
@@ -80,9 +80,9 @@ class LocalVariableTypeTable_attribute extends attribute_info {
             if (constant_pool[e.signature_index] instanceof CONSTANT_Utf8_info)
 	    {
 	       String n = ((CONSTANT_Utf8_info)(constant_pool[e.signature_index])).convert();
-           G.v().out.println("found type: "+n);
+           //G.v().out.println("found type: "+n);
 	       //if (Util.v().isValidJimpleName(n))
-		   //return n;
+		   return n;
 	       //else
 		   //return null;
 	    }

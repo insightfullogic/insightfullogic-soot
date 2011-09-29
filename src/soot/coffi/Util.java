@@ -811,6 +811,19 @@ swtch:
         }
     }
 
+	String getTypeSignatureForIndex(JimpleBody listBody, int index) {
+		if (activeVariableTypeTable != null && activeOriginalIndex != -1) {
+			if (isLocalStore)
+				activeOriginalIndex++;
+			if (isWideLocalStore)
+				activeOriginalIndex++;
+
+			return activeVariableTypeTable.getLocalVariableType(activeConstantPool,index, activeOriginalIndex);
+
+		}
+		return null;
+	}
+
     Local getLocalForIndex(JimpleBody listBody, int index)
     {
         String name = null;

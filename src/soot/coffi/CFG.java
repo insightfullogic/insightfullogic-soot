@@ -3012,6 +3012,7 @@ public class CFG {
 
             stmt = Jimple.v().newAssignStmt(Util.v().getLocalForStackOp(listBody, postTypeStack,
                 postTypeStack.topIndex()), local);
+            addSignatureTag(stmt,((Instruction_bytevar)ins).arg_b,listBody);
             break;
          }
 
@@ -3021,6 +3022,7 @@ public class CFG {
 
             stmt = Jimple.v().newAssignStmt(Util.v().getLocalForStackOp(listBody, postTypeStack,
                 postTypeStack.topIndex()), local);
+            addSignatureTag(stmt,((Instruction_bytevar)ins).arg_b,listBody);
             break;
          }
 
@@ -3031,6 +3033,7 @@ public class CFG {
 
             stmt = Jimple.v().newAssignStmt(Util.v().getLocalForStackOp(listBody, postTypeStack,
                 postTypeStack.topIndex()), local);
+            addSignatureTag(stmt,((Instruction_bytevar)ins).arg_b,listBody);
             break;
          }
 
@@ -3041,6 +3044,7 @@ public class CFG {
 
             stmt = Jimple.v().newAssignStmt(Util.v().getLocalForStackOp(listBody, postTypeStack,
                 postTypeStack.topIndex()), local);
+            addSignatureTag(stmt,((Instruction_bytevar)ins).arg_b,listBody);
             break;
          }
 
@@ -3051,6 +3055,7 @@ public class CFG {
 
             stmt = Jimple.v().newAssignStmt(Util.v().getLocalForStackOp(listBody, postTypeStack,
                 postTypeStack.topIndex()), local);
+            addSignatureTag(stmt,((Instruction_bytevar)ins).arg_b,listBody);
             break;
          }
 
@@ -3064,6 +3069,7 @@ public class CFG {
 
             stmt = Jimple.v().newAssignStmt(Util.v().getLocalForStackOp(listBody, postTypeStack,
                 postTypeStack.topIndex()), local);
+            addSignatureTag(stmt,(x - ByteCode.ILOAD_0),listBody);
             break;
          }
 
@@ -3077,6 +3083,7 @@ public class CFG {
 
             stmt = Jimple.v().newAssignStmt(Util.v().getLocalForStackOp(listBody, postTypeStack,
                 postTypeStack.topIndex()), local);
+            addSignatureTag(stmt,(x - ByteCode.FLOAD_0),listBody);
             break;
          }
 
@@ -3090,6 +3097,7 @@ public class CFG {
 
             stmt = Jimple.v().newAssignStmt(Util.v().getLocalForStackOp(listBody, postTypeStack,
                 postTypeStack.topIndex()), local);
+            addSignatureTag(stmt,(x - ByteCode.ALOAD_0),listBody);
             break;
          }
 
@@ -3103,6 +3111,7 @@ public class CFG {
 
             stmt = Jimple.v().newAssignStmt(Util.v().getLocalForStackOp(listBody, postTypeStack,
                 postTypeStack.topIndex()), local);
+            addSignatureTag(stmt,(x - ByteCode.LLOAD_0),listBody);
             break;
          }
 
@@ -3116,6 +3125,7 @@ public class CFG {
 
             stmt = Jimple.v().newAssignStmt(Util.v().getLocalForStackOp(listBody, postTypeStack,
                 postTypeStack.topIndex()), local);
+            addSignatureTag(stmt,(x - ByteCode.DLOAD_0),listBody);
             break;
          }
 
@@ -3129,6 +3139,7 @@ public class CFG {
                 ((Instruction_bytevar)ins).arg_b);
 
             stmt = Jimple.v().newAssignStmt(local, Util.v().getLocalForStackOp(listBody, typeStack, typeStack.topIndex()));
+            addSignatureTag(stmt,((Instruction_bytevar)ins).arg_b,listBody);
             break;
          }
 
@@ -3142,6 +3153,7 @@ public class CFG {
                 ((Instruction_bytevar)ins).arg_b);
 
             stmt = Jimple.v().newAssignStmt(local, Util.v().getLocalForStackOp(listBody, typeStack, typeStack.topIndex()));
+            addSignatureTag(stmt,((Instruction_bytevar)ins).arg_b,listBody);
             break;
          }
 
@@ -3155,6 +3167,7 @@ public class CFG {
                 ((Instruction_bytevar)ins).arg_b);
 
             stmt = Jimple.v().newAssignStmt(local, Util.v().getLocalForStackOp(listBody, typeStack, typeStack.topIndex()));
+            addSignatureTag(stmt,((Instruction_bytevar)ins).arg_b,listBody);
             break;
          }
 
@@ -3168,6 +3181,7 @@ public class CFG {
                 ((Instruction_bytevar)ins).arg_b);
 
             stmt = Jimple.v().newAssignStmt(local, Util.v().getLocalForStackOp(listBody, typeStack, typeStack.topIndex()));
+            addSignatureTag(stmt,((Instruction_bytevar)ins).arg_b,listBody);
             break;
          }
 
@@ -3181,6 +3195,7 @@ public class CFG {
                 ((Instruction_bytevar)ins).arg_b);
 
             stmt = Jimple.v().newAssignStmt(local, Util.v().getLocalForStackOp(listBody, typeStack, typeStack.topIndex()));
+            addSignatureTag(stmt,((Instruction_bytevar)ins).arg_b,listBody);
             break;
          }
 
@@ -3194,6 +3209,7 @@ public class CFG {
                 Util.v().getLocalForIndex(listBody, (x - ByteCode.ISTORE_0));
 
             stmt = Jimple.v().newAssignStmt(local, Util.v().getLocalForStackOp(listBody, typeStack, typeStack.topIndex()));
+            addSignatureTag(stmt,(x - ByteCode.ISTORE_0),listBody);
             break;
          }
 
@@ -3206,6 +3222,7 @@ public class CFG {
             Local local = Util.v().getLocalForIndex(listBody, (x - ByteCode.FSTORE_0));
 
             stmt = Jimple.v().newAssignStmt(local, Util.v().getLocalForStackOp(listBody, typeStack, typeStack.topIndex()));
+            addSignatureTag(stmt,(x - ByteCode.FSTORE_0),listBody);
             break;
          }
 
@@ -3216,8 +3233,9 @@ public class CFG {
          {
             Util.v().isLocalStore = true;
             Local local = Util.v().getLocalForIndex(listBody, (x - ByteCode.ASTORE_0));
-
+            
             stmt = Jimple.v().newAssignStmt(local, Util.v().getLocalForStackOp(listBody, typeStack, typeStack.topIndex()));
+            addSignatureTag(stmt,(x - ByteCode.ASTORE_0),listBody);
             break;
          }
 
@@ -3231,6 +3249,7 @@ public class CFG {
                 Util.v().getLocalForIndex(listBody, (x - ByteCode.LSTORE_0));
 
             stmt = Jimple.v().newAssignStmt(local, Util.v().getLocalForStackOp(listBody, typeStack, typeStack.topIndex()));
+            addSignatureTag(stmt,(x - ByteCode.LSTORE_0),listBody);
             break;
          }
 
@@ -3244,6 +3263,7 @@ public class CFG {
                 Util.v().getLocalForIndex(listBody, (x - ByteCode.DSTORE_0));
 
             stmt = Jimple.v().newAssignStmt(local, Util.v().getLocalForStackOp(listBody, typeStack, typeStack.topIndex()));
+            addSignatureTag(stmt,(x - ByteCode.DSTORE_0),listBody);
             break;
          }
 
@@ -3256,6 +3276,7 @@ public class CFG {
             int amt = (((Instruction_Iinc)ins).arg_c);
             rhs = Jimple.v().newAddExpr(local, IntConstant.v(amt));
             stmt = Jimple.v().newAssignStmt(local,rhs);
+            addSignatureTag(stmt,((Instruction_Iinc)ins).arg_b,listBody);
             break;
          }
 
@@ -4119,6 +4140,7 @@ public class CFG {
                 Util.v().getLocalForIndex(listBody, ((Instruction_Ret)ins).arg_b);
 
             stmt = Jimple.v().newRetStmt(local);
+            addSignatureTag(stmt,((Instruction_Ret)ins).arg_b,listBody);
             break;
          }
 
@@ -4129,9 +4151,10 @@ public class CFG {
 
 
             stmt = Jimple.v().newRetStmt(local);
+            addSignatureTag(stmt,((Instruction_Ret_w)ins).arg_i,listBody);
             break;
          }
-
+         
          case ByteCode.RETURN:
             stmt = Jimple.v().newReturnVoidStmt();
             break;
@@ -4798,6 +4821,13 @@ public class CFG {
         }
         else
             return 1;
+    }
+    
+    private void addSignatureTag(Stmt stmt, int index, JimpleBody listBody2) {
+    	String typeSignature = Util.v().getTypeSignatureForIndex(listBody, index);
+        if(typeSignature!=null) {
+        	stmt.addTag(new SignatureTag(typeSignature));
+        }
     }
 }
 
