@@ -40,11 +40,25 @@ import soot.toolkits.graph.interaction.*;
  */
 public abstract class ForwardFlowAnalysis<N,A> extends FlowAnalysis<N,A>
 {
+	private Map<N, Integer> deadLockCount = null;
+	private int deadlockUpperLimit = -1;
+
     /** Construct the analysis from a DirectedGraph representation of a Body.
      */
     public ForwardFlowAnalysis(DirectedGraph<N> graph)
     {
         super(graph);
+    }
+    
+    /**
+     * This sets an upper limit on the number of times the analysis can flow through any given node. If this limit is reached an
+     * {@link AnalysisDeadLockException} will be thrown.
+     * 
+     * @param upperLimit Negative values means unlimited
+     */
+    protected void enableDeadLockProtection(int upperLimit) {
+    	deadLockCount = new HashMap<N, Integer>();
+    	deadlockUpperLimit = upperLimit;
     }
 
     protected boolean isForward()
@@ -186,6 +200,17 @@ public abstract class ForwardFlowAnalysis<N,A> extends FlowAnalysis<N,A>
                             
                             changedUnits.add(succ);
                         }
+                    }
+
+                    if(deadlockUpperLimit>0) {
+                    	Integer count = deadLockCount.get(s);
+                    	if(count == null) {
+                    		count = new Integer(0);
+                    	}
+                    	if(count>deadlockUpperLimit) {
+                    		throw new AnalysisDeadLockException();
+                    	}
+                		deadLockCount.put(s, count+1);
                     }
                 }
             }
