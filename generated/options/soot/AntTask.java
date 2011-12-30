@@ -462,6 +462,10 @@ public class AntTask extends MatchingTask {
             if(arg) addArg("-subtract-gc");
         }
   
+        public void setloose_variable_table_resolution(boolean arg) {
+            if(arg) addArg("-loose-variable-table-resolution");
+        }
+  
         public Object createp_jb() {
             Object ret = new PhaseOptjb();
             phaseopts.add(ret);

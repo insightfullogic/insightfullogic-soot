@@ -31,6 +31,8 @@
 
 package soot.coffi;
 import soot.jimple.*;
+import soot.options.Options;
+
 import java.util.*;
 import java.io.*;
 import soot.tagkit.*;
@@ -842,6 +844,18 @@ swtch:
 					activeOriginalIndex++;
 
 				name = activeVariableTable.getLocalVariableName(activeConstantPool, index, activeOriginalIndex);
+				
+				if(name == null) {
+					if(Options.v().loose_variable_table_resolution()) {
+						name = activeVariableTable.getLocalVariableName(activeConstantPool, index, -1);
+	
+						if (name != null) {
+							G.v().out.println("WARNING - FOUND A VARIABLE NAME BY LOOKING OUTSIDE THE VARIALBLES DECLAIRED SCOPE, THIS IS LIKELY TO BE AN ERROR AND MAY CAUSE INCORRECT FUNCTION!!!");
+							G.v().out.println("CHECK THE METHOD "+listBody.getMethod().getSignature()+" AND ENSURE THAT THE VARIABLE "+name+" HAS AN INCORRECT ENTRY IN THE Local Variable Table");
+							
+						}
+					}
+				}
 
 				if (name != null)
 					assignedName = true;

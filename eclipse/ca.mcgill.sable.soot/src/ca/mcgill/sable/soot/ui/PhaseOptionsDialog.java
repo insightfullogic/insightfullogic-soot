@@ -184,6 +184,8 @@ Composite cgSpark_Output_OptionsChild = cgSpark_Output_OptionsCreate(getPageCont
 
 Composite cgContext_sensitive_refinementChild = cgContext_sensitive_refinementCreate(getPageContainer());
 
+Composite cgGeometric,_context_sensitive_analysis_(ISSTA_2011)Child = cgGeometric,_context_sensitive_analysis_(ISSTA_2011)Create(getPageContainer());
+
 Composite cgPaddle_General_OptionsChild = cgPaddle_General_OptionsCreate(getPageContainer());
 
 Composite cgPaddle_Context_Sensitivity_OptionsChild = cgPaddle_Context_Sensitivity_OptionsCreate(getPageContainer());
@@ -843,6 +845,30 @@ Composite dbdb_force_recompileChild = dbdb_force_recompileCreate(getPageContaine
 
 		
 		addToEnableGroup("cg", "cg.spark", getcgcg_sparkpasses_widget(), "passes");
+
+		
+		addToEnableGroup("cg", "cg.spark", getcgcg_sparkgeom_pta_widget(), "geom-pta");
+
+		
+		addToEnableGroup("cg", "cg.spark", getcgcg_sparkgeom_encoding_widget(), "geom-encoding");
+
+		
+		addToEnableGroup("cg", "cg.spark", getcgcg_sparkgeom_worklist_widget(), "geom-worklist");
+
+		
+		addToEnableGroup("cg", "cg.spark", getcgcg_sparkgeom_eval_widget(), "geom-eval");
+
+		
+		addToEnableGroup("cg", "cg.spark", getcgcg_sparkgeom_trans_widget(), "geom-trans");
+
+		
+		addToEnableGroup("cg", "cg.spark", getcgcg_sparkgeom_frac_base_widget(), "geom-frac-base");
+
+		
+		addToEnableGroup("cg", "cg.spark", getcgcg_sparkgeom_blocking_widget(), "geom-blocking");
+
+		
+		addToEnableGroup("cg", "cg.spark", getcgcg_sparkgeom_runs_widget(), "geom-runs");
 
 		
 		
@@ -3214,6 +3240,101 @@ Composite dbdb_force_recompileChild = dbdb_force_recompileCreate(getPageContaine
 			getConfig().put(getcgcg_sparkpasses_widget().getAlias(), stringRes);
 		}
 		
+		boolRes = getcgcg_sparkgeom_pta_widget().getButton().getSelection();
+		
+		
+		defBoolRes = false;
+		
+
+		if (boolRes != defBoolRes) {
+			getConfig().put(getcgcg_sparkgeom_pta_widget().getAlias(), new Boolean(boolRes));
+		}
+		
+		boolRes = getcgcg_sparkgeom_trans_widget().getButton().getSelection();
+		
+		
+		defBoolRes = false;
+		
+
+		if (boolRes != defBoolRes) {
+			getConfig().put(getcgcg_sparkgeom_trans_widget().getAlias(), new Boolean(boolRes));
+		}
+		
+		boolRes = getcgcg_sparkgeom_blocking_widget().getButton().getSelection();
+		
+		
+		defBoolRes = true;
+		
+
+		if (boolRes != defBoolRes) {
+			getConfig().put(getcgcg_sparkgeom_blocking_widget().getAlias(), new Boolean(boolRes));
+		}
+		
+		stringRes = getcgcg_sparkgeom_dump_verbose_widget().getText().getText();
+		
+		defStringRes = "";
+		
+
+	        if ( (!(stringRes.equals(defStringRes))) && (stringRes != null) && (stringRes.length() != 0)) {
+			getConfig().put(getcgcg_sparkgeom_dump_verbose_widget().getAlias(), stringRes);
+		}
+		
+		stringRes = getcgcg_sparkgeom_verify_name_widget().getText().getText();
+		
+		defStringRes = "";
+		
+
+	        if ( (!(stringRes.equals(defStringRes))) && (stringRes != null) && (stringRes.length() != 0)) {
+			getConfig().put(getcgcg_sparkgeom_verify_name_widget().getAlias(), stringRes);
+		}
+		
+		stringRes = getcgcg_sparkgeom_eval_widget().getText().getText();
+		
+		defStringRes = "0";
+		
+
+	        if ( (!(stringRes.equals(defStringRes))) && (stringRes != null) && (stringRes.length() != 0)) {
+			getConfig().put(getcgcg_sparkgeom_eval_widget().getAlias(), stringRes);
+		}
+		
+		stringRes = getcgcg_sparkgeom_frac_base_widget().getText().getText();
+		
+		defStringRes = "40";
+		
+
+	        if ( (!(stringRes.equals(defStringRes))) && (stringRes != null) && (stringRes.length() != 0)) {
+			getConfig().put(getcgcg_sparkgeom_frac_base_widget().getAlias(), stringRes);
+		}
+		
+		stringRes = getcgcg_sparkgeom_runs_widget().getText().getText();
+		
+		defStringRes = "1";
+		
+
+	        if ( (!(stringRes.equals(defStringRes))) && (stringRes != null) && (stringRes.length() != 0)) {
+			getConfig().put(getcgcg_sparkgeom_runs_widget().getAlias(), stringRes);
+		}
+		 
+		stringRes = getcgcg_sparkgeom_encoding_widget().getSelectedAlias();
+
+		
+		defStringRes = "Geom";
+		
+
+		if (!stringRes.equals(defStringRes)) {
+			getConfig().put(getcgcg_sparkgeom_encoding_widget().getAlias(), stringRes);
+		}
+		 
+		stringRes = getcgcg_sparkgeom_worklist_widget().getSelectedAlias();
+
+		
+		defStringRes = "PQ";
+		
+
+		if (!stringRes.equals(defStringRes)) {
+			getConfig().put(getcgcg_sparkgeom_worklist_widget().getAlias(), stringRes);
+		}
+		
 		boolRes = getcgcg_paddleenabled_widget().getButton().getSelection();
 		
 		
@@ -5072,6 +5193,16 @@ Composite dbdb_force_recompileChild = dbdb_force_recompileCreate(getPageContaine
 			getConfig().put(getMiscellaneous_Optionssubtract_gc_widget().getAlias(), new Boolean(boolRes));
 		}
 		
+		boolRes = getMiscellaneous_Optionsloose_variable_table_resolution_widget().getButton().getSelection();
+		
+		
+		defBoolRes = false;
+		
+
+		if (boolRes != defBoolRes) {
+			getConfig().put(getMiscellaneous_Optionsloose_variable_table_resolution_widget().getAlias(), new Boolean(boolRes));
+		}
+		
 		
 		setSootMainClass(getSootMainClassWidget().getText().getText());			
 		return setSootMainProject(getSootMainProjectWidget().getText().getText());
@@ -5451,6 +5582,10 @@ Composite dbdb_force_recompileChild = dbdb_force_recompileCreate(getPageContaine
 			SootOption cg_Context_sensitive_refinement_branch = new SootOption("Context-sensitive refinement", "cgContext_sensitive_refinement");
 
 			subSectParent.addChild(cg_Context_sensitive_refinement_branch);
+			
+			SootOption cg_Geometric,_context_sensitive_analysis_(ISSTA_2011)_branch = new SootOption("Geometric, context-sensitive analysis (ISSTA 2011)", "cgGeometric,_context_sensitive_analysis_(ISSTA_2011)");
+
+			subSectParent.addChild(cg_Geometric,_context_sensitive_analysis_(ISSTA_2011)_branch);
 			
 			SootOption cg_cg_paddle_branch = new SootOption("Paddle", "cgcg_paddle");
 			subParent.addChild(cg_cg_paddle_branch);
@@ -7614,6 +7749,120 @@ Composite dbdb_force_recompileChild = dbdb_force_recompileCreate(getPageContaine
 	}
 	
 	
+	private BooleanOptionWidget cgcg_sparkgeom_pta_widget;
+	
+	private void setcgcg_sparkgeom_pta_widget(BooleanOptionWidget widget) {
+		cgcg_sparkgeom_pta_widget = widget;
+	}
+	
+	public BooleanOptionWidget getcgcg_sparkgeom_pta_widget() {
+		return cgcg_sparkgeom_pta_widget;
+	}	
+	
+	private BooleanOptionWidget cgcg_sparkgeom_trans_widget;
+	
+	private void setcgcg_sparkgeom_trans_widget(BooleanOptionWidget widget) {
+		cgcg_sparkgeom_trans_widget = widget;
+	}
+	
+	public BooleanOptionWidget getcgcg_sparkgeom_trans_widget() {
+		return cgcg_sparkgeom_trans_widget;
+	}	
+	
+	private BooleanOptionWidget cgcg_sparkgeom_blocking_widget;
+	
+	private void setcgcg_sparkgeom_blocking_widget(BooleanOptionWidget widget) {
+		cgcg_sparkgeom_blocking_widget = widget;
+	}
+	
+	public BooleanOptionWidget getcgcg_sparkgeom_blocking_widget() {
+		return cgcg_sparkgeom_blocking_widget;
+	}	
+	
+	
+	private StringOptionWidget cgcg_sparkgeom_dump_verbose_widget;
+	
+	private void setcgcg_sparkgeom_dump_verbose_widget(StringOptionWidget widget) {
+		cgcg_sparkgeom_dump_verbose_widget = widget;
+	}
+	
+	public StringOptionWidget getcgcg_sparkgeom_dump_verbose_widget() {
+		return cgcg_sparkgeom_dump_verbose_widget;
+	}
+	
+	
+	
+	private StringOptionWidget cgcg_sparkgeom_verify_name_widget;
+	
+	private void setcgcg_sparkgeom_verify_name_widget(StringOptionWidget widget) {
+		cgcg_sparkgeom_verify_name_widget = widget;
+	}
+	
+	public StringOptionWidget getcgcg_sparkgeom_verify_name_widget() {
+		return cgcg_sparkgeom_verify_name_widget;
+	}
+	
+	
+	
+	private StringOptionWidget cgcg_sparkgeom_eval_widget;
+	
+	private void setcgcg_sparkgeom_eval_widget(StringOptionWidget widget) {
+		cgcg_sparkgeom_eval_widget = widget;
+	}
+	
+	public StringOptionWidget getcgcg_sparkgeom_eval_widget() {
+		return cgcg_sparkgeom_eval_widget;
+	}
+	
+	
+	
+	private StringOptionWidget cgcg_sparkgeom_frac_base_widget;
+	
+	private void setcgcg_sparkgeom_frac_base_widget(StringOptionWidget widget) {
+		cgcg_sparkgeom_frac_base_widget = widget;
+	}
+	
+	public StringOptionWidget getcgcg_sparkgeom_frac_base_widget() {
+		return cgcg_sparkgeom_frac_base_widget;
+	}
+	
+	
+	
+	private StringOptionWidget cgcg_sparkgeom_runs_widget;
+	
+	private void setcgcg_sparkgeom_runs_widget(StringOptionWidget widget) {
+		cgcg_sparkgeom_runs_widget = widget;
+	}
+	
+	public StringOptionWidget getcgcg_sparkgeom_runs_widget() {
+		return cgcg_sparkgeom_runs_widget;
+	}
+	
+	
+	
+	private MultiOptionWidget cgcg_sparkgeom_encoding_widget;
+	
+	private void setcgcg_sparkgeom_encoding_widget(MultiOptionWidget widget) {
+		cgcg_sparkgeom_encoding_widget = widget;
+	}
+	
+	public MultiOptionWidget getcgcg_sparkgeom_encoding_widget() {
+		return cgcg_sparkgeom_encoding_widget;
+	}	
+	
+	
+	
+	private MultiOptionWidget cgcg_sparkgeom_worklist_widget;
+	
+	private void setcgcg_sparkgeom_worklist_widget(MultiOptionWidget widget) {
+		cgcg_sparkgeom_worklist_widget = widget;
+	}
+	
+	public MultiOptionWidget getcgcg_sparkgeom_worklist_widget() {
+		return cgcg_sparkgeom_worklist_widget;
+	}	
+	
+	
 	private BooleanOptionWidget cgcg_paddleenabled_widget;
 	
 	private void setcgcg_paddleenabled_widget(BooleanOptionWidget widget) {
@@ -9532,6 +9781,16 @@ Composite dbdb_force_recompileChild = dbdb_force_recompileCreate(getPageContaine
 	
 	public BooleanOptionWidget getMiscellaneous_Optionssubtract_gc_widget() {
 		return Miscellaneous_Optionssubtract_gc_widget;
+	}	
+	
+	private BooleanOptionWidget Miscellaneous_Optionsloose_variable_table_resolution_widget;
+	
+	private void setMiscellaneous_Optionsloose_variable_table_resolution_widget(BooleanOptionWidget widget) {
+		Miscellaneous_Optionsloose_variable_table_resolution_widget = widget;
+	}
+	
+	public BooleanOptionWidget getMiscellaneous_Optionsloose_variable_table_resolution_widget() {
+		return Miscellaneous_Optionsloose_variable_table_resolution_widget;
 	}	
 	
 
@@ -13287,6 +13546,225 @@ Composite dbdb_force_recompileChild = dbdb_force_recompileCreate(getPageContaine
 
 		
 		return editGroupcgContext_sensitive_refinement;
+	}
+
+
+
+	private Composite cgGeometric,_context_sensitive_analysis_(ISSTA_2011)Create(Composite parent) {
+		String defKey;
+		String defaultString;
+		boolean defaultBool = false;
+	    String defaultArray;
+       
+		Group editGroupcgGeometric,_context_sensitive_analysis_(ISSTA_2011) = new Group(parent, SWT.NONE);
+		GridLayout layout = new GridLayout();
+		editGroupcgGeometric,_context_sensitive_analysis_(ISSTA_2011).setLayout(layout);
+	
+	 	editGroupcgGeometric,_context_sensitive_analysis_(ISSTA_2011).setText("Geometric, context-sensitive analysis (ISSTA 2011)");
+	 	
+		editGroupcgGeometric,_context_sensitive_analysis_(ISSTA_2011).setData("id", "cgGeometric,_context_sensitive_analysis_(ISSTA_2011)");
+		
+		String desccgGeometric,_context_sensitive_analysis_(ISSTA_2011) = "";	
+		if (desccgGeometric,_context_sensitive_analysis_(ISSTA_2011).length() > 0) {
+			Label descLabelcgGeometric,_context_sensitive_analysis_(ISSTA_2011) = new Label(editGroupcgGeometric,_context_sensitive_analysis_(ISSTA_2011), SWT.WRAP);
+			descLabelcgGeometric,_context_sensitive_analysis_(ISSTA_2011).setText(desccgGeometric,_context_sensitive_analysis_(ISSTA_2011));
+		}
+		OptionData [] data;	
+		
+		
+		
+		
+		defKey = "p"+" "+"cg.spark"+" "+"geom-pta";
+		defKey = defKey.trim();
+
+		if (isInDefList(defKey)) {
+			defaultBool = getBoolDef(defKey);	
+		}
+		else {
+			
+			defaultBool = false;
+			
+		}
+
+		setcgcg_sparkgeom_pta_widget(new BooleanOptionWidget(editGroupcgGeometric,_context_sensitive_analysis_(ISSTA_2011), SWT.NONE, new OptionData("Geometric, context-sensitive points-to analysis", "p", "cg.spark","geom-pta", "\n						 This switch enables/disables the geometric analysis. \n						 ", defaultBool)));
+		
+		
+		
+		defKey = "p"+" "+"cg.spark"+" "+"geom-trans";
+		defKey = defKey.trim();
+
+		if (isInDefList(defKey)) {
+			defaultBool = getBoolDef(defKey);	
+		}
+		else {
+			
+			defaultBool = false;
+			
+		}
+
+		setcgcg_sparkgeom_trans_widget(new BooleanOptionWidget(editGroupcgGeometric,_context_sensitive_analysis_(ISSTA_2011), SWT.NONE, new OptionData("Transform to context-insensitive result", "p", "cg.spark","geom-trans", "\n						 If your work only concern the context insensitive \npoints-to information, you can use this option to transform the \ncontext sensitive result to insensitive result. Or, sometimes \nyour code wants to directly access to the points-to vector other \nthan using the standard querying interface, you can use this \noption to guarantee the correct behavior (because we clear the \nSPARK points-to result when running the geom solver). After the \ntransformation, the context sensitive points-to result is \ncleared in order to save memory space for your other jobs. \n						 ", defaultBool)));
+		
+		
+		
+		defKey = "p"+" "+"cg.spark"+" "+"geom-blocking";
+		defKey = defKey.trim();
+
+		if (isInDefList(defKey)) {
+			defaultBool = getBoolDef(defKey);	
+		}
+		else {
+			
+			defaultBool = true;
+			
+		}
+
+		setcgcg_sparkgeom_blocking_widget(new BooleanOptionWidget(editGroupcgGeometric,_context_sensitive_analysis_(ISSTA_2011), SWT.NONE, new OptionData("Blocking strategy for recursive calls", "p", "cg.spark","geom-blocking", "\n						 When this option is on, we perform the blocking \nstrategy to the recursive calls. This strategy significantly \nimproves the precision. The details are presented in our paper. \n						 ", defaultBool)));
+		
+		
+		
+		data = new OptionData [] {
+		
+		new OptionData("Geometric",
+		"Geom",
+		"\n						 Geometric Encoding. 						 ",
+		
+		true),
+		
+		new OptionData("Heap Insensitive",
+		"HeapIns",
+		"\n						 Heap Insensitive Encoding. Omit the heap context \nrange term in the encoded representation, and in turn, we assume \nall the contexts for this heap object are used. 						 ",
+		
+		false),
+		
+		new OptionData("Pointer Insensitive",
+		"PtIns",
+		"\n						 Pointer Insensitive Encoding. Similar to HeapIns, \nbut we omit the pointer context range term. 						 ",
+		
+		false),
+		
+		};
+		
+										
+		setcgcg_sparkgeom_encoding_widget(new MultiOptionWidget(editGroupcgGeometric,_context_sensitive_analysis_(ISSTA_2011), SWT.NONE, data, new OptionData("Encoding methodology used", "p", "cg.spark","geom-encoding", "\n						 This switch specifies the encoding methodology used \nin the analysis. 						 All possible options are: Geom, \nHeapIns, PtIns. The efficiency order 						 is (from slow to \nfast) Geom - HeapIns - PtIns, but the precision order is 						 \nthe reverse. 						 ")));
+		
+		defKey = "p"+" "+"cg.spark"+" "+"geom-encoding";
+		defKey = defKey.trim();
+		
+		if (isInDefList(defKey)) {
+			defaultString = getStringDef(defKey);
+		
+			getcgcg_sparkgeom_encoding_widget().setDef(defaultString);
+		}
+		
+		
+		
+		data = new OptionData [] {
+		
+		new OptionData("Priority Queue",
+		"PQ",
+		"\n						 Priority Queue (sorted by the last fire time and \ntopology order) 						 ",
+		
+		true),
+		
+		new OptionData("FIFO Queue",
+		"FIFO",
+		"\n						 FIFO Queue 						 ",
+		
+		false),
+		
+		};
+		
+										
+		setcgcg_sparkgeom_worklist_widget(new MultiOptionWidget(editGroupcgGeometric,_context_sensitive_analysis_(ISSTA_2011), SWT.NONE, data, new OptionData("Worklist type", "p", "cg.spark","geom-worklist", "\n						 Specifies the worklist used for selecting the next \npropagation pointer. All possible options are: PQ, FIFO. They \nstand for the priority queue (sorted by the last fire time and \ntopology order) and FIFO queue. 						 ")));
+		
+		defKey = "p"+" "+"cg.spark"+" "+"geom-worklist";
+		defKey = defKey.trim();
+		
+		if (isInDefList(defKey)) {
+			defaultString = getStringDef(defKey);
+		
+			getcgcg_sparkgeom_worklist_widget().setDef(defaultString);
+		}
+		
+		
+		
+		defKey = "p"+" "+"cg.spark"+" "+"geom-dump-verbose";
+		defKey = defKey.trim();
+		
+		if (isInDefList(defKey)) {
+			defaultString = getStringDef(defKey);	
+		}
+		else {
+			
+			defaultString = "";
+			
+		}
+
+		setcgcg_sparkgeom_dump_verbose_widget(new StringOptionWidget(editGroupcgGeometric,_context_sensitive_analysis_(ISSTA_2011), SWT.NONE, new OptionData("Verbose dump file",  "p", "cg.spark","geom-dump-verbose", "\n						 If you want to persist the detailed execution \ninformation for future analysis, please provide a file name. \n						 ", defaultString)));
+		
+		
+		defKey = "p"+" "+"cg.spark"+" "+"geom-verify-name";
+		defKey = defKey.trim();
+		
+		if (isInDefList(defKey)) {
+			defaultString = getStringDef(defKey);	
+		}
+		else {
+			
+			defaultString = "";
+			
+		}
+
+		setcgcg_sparkgeom_verify_name_widget(new StringOptionWidget(editGroupcgGeometric,_context_sensitive_analysis_(ISSTA_2011), SWT.NONE, new OptionData("Verification file",  "p", "cg.spark","geom-verify-name", "\n						 If you want to compare the precision of the points-to \nresults with other solvers (e.g. Paddle), you can use the \n"verify-file" to specify the list of methods (soot method \nsignature format) that are reachable by that solver. Then, in \nthe internal evaluations (see the switch geom-eval), we only \nconsider the methods that are present to both solvers. 						 ", defaultString)));
+		
+		
+		defKey = "p"+" "+"cg.spark"+" "+"geom-eval";
+		defKey = defKey.trim();
+		
+		if (isInDefList(defKey)) {
+			defaultString = getStringDef(defKey);	
+		}
+		else {
+			
+			defaultString = "0";
+			
+		}
+
+		setcgcg_sparkgeom_eval_widget(new StringOptionWidget(editGroupcgGeometric,_context_sensitive_analysis_(ISSTA_2011), SWT.NONE, new OptionData("Precision evaluation methodologies",  "p", "cg.spark","geom-eval", "\n						 We internally provide some precision evaluation \nmethodologies, and classify the evaluation strength into three \nlevels. If level is 0, we do nothing. If level is 1, we report \nthe basic information about the points-to result. If level is 2, \nwe perform the virtual callsite resolution, static cast safety \nand all alias pairs evaluations. 						 ", defaultString)));
+		
+		
+		defKey = "p"+" "+"cg.spark"+" "+"geom-frac-base";
+		defKey = defKey.trim();
+		
+		if (isInDefList(defKey)) {
+			defaultString = getStringDef(defKey);	
+		}
+		else {
+			
+			defaultString = "40";
+			
+		}
+
+		setcgcg_sparkgeom_frac_base_widget(new StringOptionWidget(editGroupcgGeometric,_context_sensitive_analysis_(ISSTA_2011), SWT.NONE, new OptionData("Fractional parameter",  "p", "cg.spark","geom-frac-base", "\n						 This option specifies the fractional parameter, which \nis used to manually tune the precision and performance \ntrade-off. The smaller the value, the better the performance but \nthe worse the precision. 						 ", defaultString)));
+		
+		
+		defKey = "p"+" "+"cg.spark"+" "+"geom-runs";
+		defKey = defKey.trim();
+		
+		if (isInDefList(defKey)) {
+			defaultString = getStringDef(defKey);	
+		}
+		else {
+			
+			defaultString = "1";
+			
+		}
+
+		setcgcg_sparkgeom_runs_widget(new StringOptionWidget(editGroupcgGeometric,_context_sensitive_analysis_(ISSTA_2011), SWT.NONE, new OptionData("Iterations",  "p", "cg.spark","geom-runs", "\n						 We can run multiple times of the geometric analysis \nto continuously improve the analysis precision. 						 ", defaultString)));
+		
+
+		
+		return editGroupcgGeometric,_context_sensitive_analysis_(ISSTA_2011);
 	}
 
 
@@ -19162,6 +19640,22 @@ Composite dbdb_force_recompileChild = dbdb_force_recompileCreate(getPageContaine
 		}
 
 		setMiscellaneous_Optionssubtract_gc_widget(new BooleanOptionWidget(editGroupMiscellaneous_Options, SWT.NONE, new OptionData("Subtract Garbage Collection Time", "", "","subtract-gc", "\nAttempt to subtract time spent in garbage collection from the \nreports of times required for transformations. ", defaultBool)));
+		
+		
+		
+		defKey = ""+" "+""+" "+"loose-variable-table-resolution";
+		defKey = defKey.trim();
+
+		if (isInDefList(defKey)) {
+			defaultBool = getBoolDef(defKey);	
+		}
+		else {
+			
+			defaultBool = false;
+			
+		}
+
+		setMiscellaneous_Optionsloose_variable_table_resolution_widget(new BooleanOptionWidget(editGroupMiscellaneous_Options, SWT.NONE, new OptionData("Loose Variable Table Resolution", "", "","loose-variable-table-resolution", "\nSome compilers seem to generate variable tables that are \nincompatable with soot, where the variable is used outside its \nspecified scope. If this mode is enabled the variable name \nresolution will first attempt to find a variables name observing \nthe declaired scope, if that fails then trys again ignoring the \nscope.", defaultBool)));
 		
 		
 

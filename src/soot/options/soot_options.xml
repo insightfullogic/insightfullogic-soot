@@ -5938,5 +5938,12 @@ Attempt to subtract time spent in garbage collection from
 the reports of times required for transformations.
 </long_desc>
 		</boolopt>
+		<boolopt>
+			<name>Loose Variable Table Resolution</name>
+			<alias>loose-variable-table-resolution</alias>
+			<default>false</default>
+			<short_desc>Whether to enable loose variable table resolution</short_desc>
+			<long_desc>Some compilers seem to generate variable tables that are incompatable with soot, where the variable is used outside its specified scope. If this mode is enabled the variable name resolution will first attempt to find a variables name observing the declaired scope, if that fails then trys again ignoring the scope.</long_desc>
+		</boolopt>
 	</section>
 </options>

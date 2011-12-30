@@ -881,6 +881,11 @@ public class Options extends OptionsBase {
             )
                 subtract_gc = true;
   
+            else if( false 
+            || option.equals( "loose-variable-table-resolution" )
+            )
+                loose_variable_table_resolution = true;
+  
             else {
                 G.v().out.println( "Invalid option -"+option );
                 return false;
@@ -1140,6 +1145,10 @@ public class Options extends OptionsBase {
     private boolean subtract_gc = false;
     public void set_subtract_gc( boolean setting ) { subtract_gc = setting; }
   
+    public boolean loose_variable_table_resolution() { return loose_variable_table_resolution; }
+    private boolean loose_variable_table_resolution = false;
+    public void set_loose_variable_table_resolution( boolean setting ) { loose_variable_table_resolution = setting; }
+  
 
     public String getUsage() {
         return ""
@@ -1237,7 +1246,8 @@ public class Options extends OptionsBase {
 +"\nMiscellaneous Options:\n"
       
 +padOpt(" -time", "Report time required for transformations" )
-+padOpt(" -subtract-gc", "Subtract gc from time" );
++padOpt(" -subtract-gc", "Subtract gc from time" )
++padOpt(" -loose-variable-table-resolution", "Whether to enable loose variable table resolution" );
     }
 
 
@@ -1675,7 +1685,7 @@ public class Options extends OptionsBase {
                 
                 +padOpt( "geom-dump-verbose ()", "Filename for detailed execution log" )
                 +padOpt( "geom-verify-name ()", "Filename for verification file" )
-                +padOpt( "geom-eval (0)", "precision evaluation methodologies" )
+                +padOpt( "geom-eval (0)", "Precision evaluation methodologies" )
                 +padOpt( "geom-trans (false)", "Transform to context-insensitive result" )
                 +padOpt( "geom-frac-base (40)", "Fractional parameter for precision/performance trade-off" )
                 +padOpt( "geom-blocking (true)", "Enable blocking strategy for recursive calls" )
